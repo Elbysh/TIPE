@@ -709,7 +709,7 @@ Fantôme4 = array(
 CarteFonda = array([[2 for k in range(0, 300)],
                     [0 for k in range(0, 300)],
                     [2 for k in range(0, 300)]])
-circulation_une_voie(CarteUneVoie,2,1,0.4,0.3)
-CirculationkVoie(CarteTroisVoie, 2, [1, 2, 3], 0.2, 0.2)
-Diagramme_fondamental(CarteFonda, 1, 2, 0.1, 0, 150)
+# circulation_une_voie(CarteUneVoie, 2, 1, 0.4, 0.3)
+# CirculationkVoie(CarteTroisVoie, 2, [1, 2, 3], 0.2, 0.2)
+# Diagramme_fondamental(CarteFonda, 1, 2, 0.1, 0, 150)
 experience_fantome([Fantôme1, Fantôme2, Fantôme3, Fantôme4], 0, 3, 2, 10, 40)
