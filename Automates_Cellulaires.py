@@ -7,6 +7,12 @@ from matplotlib import *
 import pylab as py
 import pygame
 
+""" Dans la représentation de la route choisie :
+0 représente une partie de la route
+1 représente une voiture
+2 représente le décors
+"""
+
 
 def moyenne(L):
     """
@@ -88,30 +94,6 @@ def peut_changer_de_voie(i, v, voie, carte, h_b):
         return False
 
 
-def peut_changer_de_voie_obstacle(i, v, voie, carte, h_b, pos_obs):
-    """
-    Renvoie True si la voiture i peut changer de voie en haut si h_b='h' ou en bas si h_b='b'
-    """
-    (x, y) = pos_obs
-    if (voie, position_voiture(nombre_de_voiture(carte, voie), voie, carte)) != (x, y - 1):
-        return False  # on ne change de voie qu'en cas d'obstacle
-    if h_b == 'b':
-        l = position_voiture(i, voie, carte)
-        if carte[voie + 1, l] == 2:
-            return False
-        if 1 not in [carte[voie + 1, p] for p in range(l - 1, l + v + 1)]:
-            return True
-        return False
-
-    if h_b == 'h':
-        l = position_voiture(i, voie, carte)
-        if carte[voie - 1, l] == 2:
-            return False
-        if 1 not in [carte[voie - 1, p] for p in range(l - 1, l + v + 1)]:
-            return True
-        return False
-
-
 def changer_de_voie(i, v, voie, carte, h_b):
     """
     La voiture i change voie de toujours une case en diagonale en haut ou en bas
@@ -189,7 +171,7 @@ def distance_v(i, carte, voie):
 
 def pliage(Carte):
     """
-    Prend en argument une carte de longueur de format 1x36 et renvoie une carte en forme de boucle
+    Prend en argument une carte de longueur de format 1x36 et renvoie une carte en forme de boucle pour effecteur l'expérience sur les embouteillages fantomes
     """
     M = ones((10, 10)) * 2
     M[0, 0] = Carte[0, 0]
@@ -281,7 +263,7 @@ def circulation_une_voie(carte, v, voie, pro, ral):
     quit()
 
 
-def CirculationkVoie(carte, v, ListeVoie, pro_ral, p_chgt_voie):
+def circulationkvoie(carte, v, ListeVoie, pro_ral, p_chgt_voie):
     pro = pro_ral
     map = carte.copy()
     running = True
@@ -509,7 +491,7 @@ def experience_fantome(ListeCarte, voie, temps_arret, v, timing, tours):
 # Diagramme fondamental
 
 
-def Diagramme_fondamental(carte, voie, v, ral, pro, pos_mesure_débit):
+def Diagramme_fondamental(carte, voie, v, ral, pro, pos_mesure_débit, nb_points_total):
     """
     Trace le diagramme fondamental du trafic routier
     """
@@ -535,6 +517,7 @@ def Diagramme_fondamental(carte, voie, v, ral, pro, pos_mesure_débit):
     # on pose 1h = 120tours
     # on pose 1km = 30 cases
     # on prend une carte de longueur au moins 100 cases
+
     while Running:
         if temps == 120:
             nbr_voit = randint(0, 250)
@@ -607,7 +590,7 @@ def Diagramme_fondamental(carte, voie, v, ral, pro, pos_mesure_débit):
             if event.type == QUIT:
                 Running = False
         sleep(0.01)
-        if nb_pt > 50:
+        if nb_pt > nb_points_total:
             Running = False
     quit()
     py.scatter(DENSITE, DEBIT)
@@ -710,6 +693,6 @@ CarteFonda = array([[2 for k in range(0, 300)],
                     [0 for k in range(0, 300)],
                     [2 for k in range(0, 300)]])
 # circulation_une_voie(CarteUneVoie, 2, 1, 0.4, 0.3)
-# CirculationkVoie(CarteTroisVoie, 2, [1, 2, 3], 0.2, 0.2)
-# Diagramme_fondamental(CarteFonda, 1, 2, 0.1, 0, 150)
-experience_fantome([Fantôme1, Fantôme2, Fantôme3, Fantôme4], 0, 3, 2, 10, 40)
+# circulationkvoie(CarteTroisVoie, 2, [1, 2, 3], 0.2, 0.2)
+# Diagramme_fondamental(CarteFonda, 1, 2, 0.1, 0, 150, 100)
+# experience_fantome([Fantôme1, Fantôme2, Fantôme3, Fantôme4], 0, 3, 2, 10, 40)
